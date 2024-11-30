@@ -47,14 +47,16 @@ public class InventoryCanvas : MonoBehaviour
 
     // 스타트는 한번만 불리는데 아이템을 추가적으로 습득하면 업데이트가 안되는 현상 고치기.
 
+
+    List<GameObject> inventoryPanels = new List<GameObject>();
     public void InventoryUpdate()
     {
-        // 생성된 아이템 패널들을 삭제
-        foreach (Transform child in inventoryParentTr)
-        {
-            Destroy(child.gameObject);
-        }
+      
 
+        for(int i = 0; i < inventoryPanels.Count; i++)
+        {
+            inventoryPanels[i].SetActive(false);
+        }
 
 
         if (Character.Instance.itemList.Count <= 0)
@@ -65,14 +67,33 @@ public class InventoryCanvas : MonoBehaviour
             if (Character.Instance.itemList[i].count <= 0)
                 continue; // 반복문의  }를 만났을 때와 같은 처리 -반복문을 다시 시작
 
-            GameObject inventory = Instantiate(inventoryPrefab, inventoryParentTr);
-            InventoryPanel panel = inventory.GetComponent<InventoryPanel>();
+            GameObject inventoryPanel = null; //현재 비활성화된 inventoryPanel 담기
+
+            //재활용 가능한게 있는지 확인!!
+            for (int j= 0; j < inventoryPanels.Count; j++)
+            {
+                if (inventoryPanels[j].activeSelf == false)
+                {
+                    inventoryPanel = inventoryPanels[j];
+                    inventoryPanel.SetActive(true);
+                    break;
+                }
+            }
+            
+            if (inventoryPanel == null)
+            {
+                inventoryPanel = Instantiate(inventoryPrefab, inventoryParentTr);
+                inventoryPanels.Add(inventoryPanel);
+            }
+            
+            InventoryPanel panel = inventoryPanel.GetComponent<InventoryPanel>();
             panel.SetItem(Character.Instance.itemList[i]);
         }
     }
 
     public void ItemCollected()
     {
+        if (gameObject.activeSelf)
         InventoryUpdate();
     }
 
