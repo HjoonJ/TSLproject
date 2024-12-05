@@ -125,6 +125,7 @@ public class Character : MonoBehaviour
             {
                 countUp = true;
                 itemList[i].count += count;
+                //PlayerPrefs.SetInt(itemName, itemList[i].count);
                 break;
 
                 //return; 쓰면 한방에 해결
@@ -136,6 +137,7 @@ public class Character : MonoBehaviour
         
         {
             itemList.Add(new Item(itemName, count));
+
         }
 
         // 아이템 리스트가 업데이트 시 인벤토리 갱신
