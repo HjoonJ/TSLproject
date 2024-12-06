@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
-using UnityEditor.Search;
+
 public class Character : MonoBehaviour
 {
     public NavMeshAgent agent;
@@ -63,10 +63,10 @@ public class Character : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            // 모든 행동을 멈추고 Shop의 DestinationTr로 이동 및 도착 시 인벤토리  자동 오픈
-        }
+        //if (Input.GetKeyDown(KeyCode.S))
+        //{
+        //    모든 행동을 멈추고 Shop의 DestinationTr로 이동 및 도착 시 인벤토리  자동 오픈
+        //}
     }
 
     
