@@ -20,7 +20,7 @@ public class Character : MonoBehaviour
 
     Action arrivedCallback;
 
-    public List<Item> itemList = new List<Item>();
+
 
     private void Awake()
     {
@@ -114,37 +114,6 @@ public class Character : MonoBehaviour
         agent.isStopped = true;
     }
     
-    
-    //아이템을 얻었을 때 호출되는 함수
-    public void AddItem(string itemName, int count)
-    {
-        bool countUp = false;
-        for (int i = 0; i < itemList.Count; i++)
-        {
-            if (itemName == itemList[i].itemName) 
-            {
-                countUp = true;
-                itemList[i].count += count;
-                //PlayerPrefs.SetInt(itemName, itemList[i].count);
-                break;
-
-                //return; 쓰면 한방에 해결
-            }
-
-        }
-
-        if (countUp == false) 
-        
-        {
-            itemList.Add(new Item(itemName, count));
-
-        }
-
-        // 아이템 리스트가 업데이트 시 인벤토리 갱신
-
-        InventoryCanvas.Instance.InventoryUpdate();
-
-    }
 
 }
 
@@ -155,6 +124,12 @@ public class Item
 {
     public string itemName;
     public int count;
+    
+    //(디폴트 생성자) 참고
+    //public Item()
+    //{
+
+    //}
 
     public Item(string itemName, int count)
     {

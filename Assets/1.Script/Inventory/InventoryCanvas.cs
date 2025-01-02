@@ -32,7 +32,7 @@ public class InventoryCanvas : MonoBehaviour
         gameObject.SetActive(false);
 
     }
-    // E 키를 누르면 인벤토리창 열리기.
+    // I 키를 누르면 인벤토리창 열리기.
 
     private void Update()
     {
@@ -59,12 +59,12 @@ public class InventoryCanvas : MonoBehaviour
         }
 
 
-        if (Character.Instance.itemList.Count <= 0)
+        if (User.Instance.userData.userItems.Count <= 0)
             return;
 
-        for (int i = 0; i < Character.Instance.itemList.Count; i++)
+        for (int i = 0; i < User.Instance.userData.userItems.Count; i++)
         {
-            if (Character.Instance.itemList[i].count <= 0)
+            if (User.Instance.userData.userItems[i].count <= 0)
                 continue; // 반복문의  }를 만났을 때와 같은 처리 -반복문을 다시 시작
 
             GameObject inventoryPanel = null; //현재 비활성화된 inventoryPanel 담기
@@ -87,7 +87,7 @@ public class InventoryCanvas : MonoBehaviour
             }
             
             InventoryPanel panel = inventoryPanel.GetComponent<InventoryPanel>();
-            panel.SetItem(Character.Instance.itemList[i]);
+            panel.SetItem(User.Instance.userData.userItems[i]);
         }
     }
 

@@ -100,7 +100,7 @@ public class CollectingArea : Area
 
                 //획득하는 처리. (캐릭터가 데이터를 가지고 있게끔)
 
-                Character.Instance.AddItem(collections[i].collectionName, 1);
+                User.Instance.AddItem(collections[i].collectionName, 1);
             }
         }
 

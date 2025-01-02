@@ -5,6 +5,7 @@ using UnityEngine;
 public class IdleBehaviour : CharacterBehaviour
 {
     public float timer = 0f;
+    public BehaviourType[] randomBehaviourTypes;
 
     public IdleBehaviour()
     {
@@ -36,9 +37,9 @@ public class IdleBehaviour : CharacterBehaviour
 
     public void NextBehaviour()
     {
-        int count = (int)BehaviourType.Count;
+        int count = randomBehaviourTypes.Length;
         int randomIdx = Random.Range(0, count);
-        BehaviourType nextBehaviourType = (BehaviourType)randomIdx;
+        BehaviourType nextBehaviourType = randomBehaviourTypes[randomIdx];
 
         // 캐릭터의 React 함수를 호출하여 다음 행동을 실행
 

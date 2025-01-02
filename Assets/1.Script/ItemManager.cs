@@ -26,6 +26,8 @@ public class ItemManager : MonoBehaviour
     }
 }
 
+
+//게임 데이터 (게임 내 절대불변의 내용들)
 [System.Serializable]
 public class ItemData
 {
