@@ -4,7 +4,7 @@ using UnityEngine;
 public class CharacterBehaviour : MonoBehaviour
 {
     public BehaviourType type;
-
+    
     //행동이 완성되었는지 아닌지.
     public bool IsComplete;
     public virtual void EnterBehaviour()
@@ -14,7 +14,7 @@ public class CharacterBehaviour : MonoBehaviour
 
     public virtual void UpdateBehaviour()
     {
-
+        
     }
 
 

@@ -81,6 +81,8 @@ public class Character : MonoBehaviour
             {
                 curBehaviour = behaviours[i];
                 curBehaviour.EnterBehaviour();
+                //현재 행동을 판단해서 어떤 AI를 켤지 판단
+                ResponseMatcherFunction.Instance.UpdateResponse();
                 break;
             }
         }
