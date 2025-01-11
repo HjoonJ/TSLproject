@@ -15,7 +15,7 @@ public class Target : MonoBehaviour
     //public float curShield; // current shield
 
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         // 나중에 실드 추가할 일 있으면 추가하기 - 건물이 다 부서지고 난 뒤 2차 침공 때 사용.
         //curShield -= damage;

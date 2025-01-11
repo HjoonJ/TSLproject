@@ -6,29 +6,39 @@ public class EnemyBullet : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
 
-    int damage;
+    //공격력
+    public float bulletPower;
 
-    public void Shoot(int d)
+    Target target;
+    
+
+    //공격력과 타켓을 전달하는 함수
+    public void Shoot(float power, Target t)
     {
-        //transform.rotation = Quaternion.AngleAxis(rotationZ, Vector3.back);
-        damage = d;
+        bulletPower = power;
+        target = t;
     }
 
-    void Update()
+    public void Update()
     {
         //타겟 쪽으로 쏘아야함. 
-        
-        
-        //transform.position += transform.up * moveSpeed * Time.deltaTime;
+        if (target != null)
+        {
+            // 타겟 방향
+            Vector3 direction = (target.transform.position - transform.position).normalized;
+
+            // 타겟 방향으로 이동
+            transform.position += direction * moveSpeed * Time.deltaTime;
+        }
+
+
     }
 
-
-    // 3D ? 설정이 안됨. 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.CompareTag("Target"))
         {
-            collision.GetComponent<Target>().TakeDamage(damage);
+            collision.GetComponent<Target>().TakeDamage(bulletPower);
             Destroy(gameObject);
         }
     }

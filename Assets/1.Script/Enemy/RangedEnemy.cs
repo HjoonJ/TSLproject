@@ -4,59 +4,20 @@ using UnityEngine;
 
 public class RangedEnemy : Enemy
 {
-    public float moveSpeed;
-    public float atkSpeed;
+
     [SerializeField] EnemyBullet enemyBulletPrefeb;
 
-    //가장 가까운 타겟 쪽으로 이동시켜야함.
-    Vector3 targetPos;
-
-    bool arrived = false;
-
-    public override void TakeDamage(int d)
+    public override void Attack()
     {
-        curHp -= d;
-        if (curHp <= 0)
-        { 
-            Destroy(gameObject);   
-        }
-    }
+        EnemyBullet b = Instantiate(enemyBulletPrefeb);
+        // Bullet 시작위치를 나중에 총구로 변환해야함.
+        b.transform.position = transform.position;
 
-    private void Update()
-    {
+        //공격력 및 타켓을 전달받음.
+        b.Shoot(attackPower, target);
 
-        if (arrived)
-            return;
+        Debug.Log("Attack!!");
 
-        targetPos = GameManager.Instance.GetClosestTarget(targetPos).transform.position;
-
-        if (Vector2.Distance(transform.position, targetPos) <= 0.01)
-        {
-            arrived = true;
-            StartCoroutine(CoAttack());
-
-            return;
-        }
-
-        transform.position = Vector2.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
-    }
-
-    IEnumerator CoAttack()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(atkSpeed);
-            EnemyBullet b = Instantiate(enemyBulletPrefeb);
-            b.transform.position = transform.position;
-
-            //b.Shoot(damage);
-
-            Debug.Log("Attack!!");
-
-        }
-
-            
-        
     }
 
 }

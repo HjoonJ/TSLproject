@@ -11,20 +11,28 @@ public class Enemy : MonoBehaviour
 
     public float maxHp;
     public float curHp;
-    
+
+    //공격력
+    public float attackPower;
+
     public NavMeshAgent agent;
+
+    public float moveSpeed;
+    public float atkSpeed;
 
     public Animator animator; // 캐릭터 애니메이션을 제어하는 컨포넌트
     Vector3 destinationPoint;
     Action arrivedCallback;
 
+    public Target target;
+
     public void Start()
     {
         // target 컨포넌트를 포함하고 있는 게임오브젝트 중 가장 가까운 것으로 이동.
-        Target target = GameManager.Instance.GetClosestTarget(transform.position);
+        target = GameManager.Instance.GetClosestTarget(transform.position);
 
 
-        MoveTo(GameManager.Instance.targets[0].transform.position, Arrived);
+        MoveTo(target.transform.position, Arrived);
         
 
     }
@@ -40,6 +48,9 @@ public class Enemy : MonoBehaviour
             {
                 animator.SetBool("Walking", false);
 
+                // 도착 후 타겟을 바라봄
+                LookAtTarget();
+
                 if (arrivedCallback != null)
                 {
                     // arrivedCallback 에 담겨있는 함수를 실행하라 (Invoke)
@@ -53,8 +64,38 @@ public class Enemy : MonoBehaviour
 
     }
 
+    public void LookAtTarget()
+    {
+        if (target != null)
+        {
+            // 타겟 방향 계산
+            Vector3 direction = (target.transform.position - transform.position).normalized;
+
+            // Y축 회전만 고려하여 회전값 설정
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+
+            // 즉시 타겟 방향으로 회전
+            transform.rotation = lookRotation;
+        }
+    }
+
+    public virtual void Attack()
+    {
+       
+    }
+
     public void Arrived()
     {
+        StartCoroutine(CoAttack());
+    }
+    IEnumerator CoAttack()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(atkSpeed);
+
+            Attack();
+        }
 
     }
 
@@ -88,8 +129,9 @@ public class Enemy : MonoBehaviour
 
 public enum EnemyType
 {
-    MeleeEnemy,
-    RangedEnemy,
+    MeleeEnemy,//근거리
+    RangedEnemy, //원거리
+    
     //플레이어만 공격하는 적
     PlayerHunter
 }
