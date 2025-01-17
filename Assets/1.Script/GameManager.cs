@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
 
 
     public Target[] targets;
+    public Character[] characters;
+
+    public Enemy[] enemies;
 
     private void Awake()
     {
@@ -17,7 +20,9 @@ public class GameManager : MonoBehaviour
         targets = FindObjectsOfType<Target>();
         //유니티6에서는 targets = FindObjectsByType<Target>(FindObjectsSortMode.None);
 
+        characters = FindObjectsOfType<Character>();
 
+        enemies = FindObjectsOfType<Enemy>();
     }
 
     public void Start()
@@ -41,6 +46,40 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log(minDis);
         return targets[targetIdx];
+    }
+
+    public Character GetClosestCharacter(Vector3 point)
+    {
+        float minDis = float.MaxValue;
+        int characterIdx = 0;
+        for (int i = 0; i < characters.Length; i++)
+        {
+            float dis = Vector3.Distance(characters[i].transform.position, point);
+            if (dis < minDis)
+            {
+                minDis = dis;
+                characterIdx = i;
+            }
+        }
+        Debug.Log(minDis);
+        return characters[characterIdx];
+    }
+
+    public Enemy GetClosestEnemy(Vector3 point)
+    {
+        float minDis = float.MaxValue;
+        int enemyIdx = 0;
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            float dis = Vector3.Distance(enemies[i].transform.position, point);
+            if (dis < minDis)
+            {
+                minDis = dis;
+                enemyIdx = i;
+            }
+        }
+        Debug.Log(minDis);
+        return enemies[enemyIdx];
     }
 
 }

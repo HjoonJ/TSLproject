@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
 {
     public EnemyType type;
 
+    public LayerMask targetLayerMask;
+    public LayerMask characterLayerMask;
     public float maxHp;
     public float curHp;
 
@@ -26,14 +28,21 @@ public class Enemy : MonoBehaviour
 
     public Target target;
 
+    public Character character;
+
     public void Start()
     {
-        // target 컨포넌트를 포함하고 있는 게임오브젝트 중 가장 가까운 것으로 이동.
-        target = GameManager.Instance.GetClosestTarget(transform.position);
+        FindTarget();
+        FindCharacter();
+    }
 
-
-        MoveTo(target.transform.position, Arrived);
+    public virtual void FindTarget()
+    {
         
+    }
+
+    public virtual void FindCharacter()
+    {
 
     }
 
@@ -48,8 +57,9 @@ public class Enemy : MonoBehaviour
             {
                 animator.SetBool("Walking", false);
 
-                // 도착 후 타겟을 바라봄
+                // 도착 후 타겟 혹은 캐릭터를 바라봄
                 LookAtTarget();
+                LookAtCharacter();
 
                 if (arrivedCallback != null)
                 {
@@ -64,19 +74,14 @@ public class Enemy : MonoBehaviour
 
     }
 
-    public void LookAtTarget()
+    public virtual void LookAtTarget()
     {
-        if (target != null)
-        {
-            // 타겟 방향 계산
-            Vector3 direction = (target.transform.position - transform.position).normalized;
+        
+    }
 
-            // Y축 회전만 고려하여 회전값 설정
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
-
-            // 즉시 타겟 방향으로 회전
-            transform.rotation = lookRotation;
-        }
+    public virtual void LookAtCharacter()
+    {
+        
     }
 
     public virtual void Attack()

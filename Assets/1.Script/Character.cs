@@ -8,7 +8,15 @@ public class Character : MonoBehaviour
 {
     public NavMeshAgent agent;
 
-    public static Character Instance; 
+    public static Character Instance;
+
+    public int hp;
+
+    public float maxHp;
+    public float curHp; // current hp
+
+    //public float maxShield = 100;
+    //public float curShield; // current shield
 
     //행동: 낚시, 채집, 구경하기
     public CharacterBehaviour[] behaviours;
@@ -26,7 +34,7 @@ public class Character : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
-        
+
         behaviours = GetComponentsInChildren<CharacterBehaviour>();
     }
 
@@ -38,7 +46,7 @@ public class Character : MonoBehaviour
         //destinationPoint = RandomPoint();
         //MoveTo(destinationPoint);
 
-
+        curHp = maxHp;
     }
 
     private void Update()
@@ -46,20 +54,20 @@ public class Character : MonoBehaviour
         curBehaviour.UpdateBehaviour();
 
         // 캐릭터가 특정 위치에 도착했다고 판별하는 if 코드
-        if(!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
-            if (!agent.hasPath || agent.velocity.sqrMagnitude ==0)
+            if (!agent.hasPath || agent.velocity.sqrMagnitude == 0)
             {
                 animator.SetBool("Walking", false);
-                
-                if(arrivedCallback != null)
+
+                if (arrivedCallback != null)
                 {
                     // arrivedCallback 에 담겨있는 함수를 실행하라 (Invoke)
                     arrivedCallback.Invoke();
                     arrivedCallback = null;
                 }
-                  
-                
+
+
             }
         }
 
@@ -69,7 +77,7 @@ public class Character : MonoBehaviour
         //}
     }
 
-    
+
 
     //action 에 따른 캐릭터의 현재 행동을 어떻게 변경할까
     // 넣고싶은 행동 기획하기
@@ -95,7 +103,7 @@ public class Character : MonoBehaviour
         float x = UnityEngine.Random.Range(-5f, 5f);
         float z = UnityEngine.Random.Range(-5f, 5f);
 
-        Vector3 randomPoint = new Vector3 (x,0,z);
+        Vector3 randomPoint = new Vector3(x, 0, z);
 
         return randomPoint;
 
@@ -115,13 +123,29 @@ public class Character : MonoBehaviour
     {
         agent.isStopped = true;
     }
-    
+
+    public void TakeDamage(float damage)
+    {
+
+        curHp -= damage;
+        if (curHp <= 0)
+        {
+            // 일정 시간이 지나고 나면 다시 Hp 절반이 차오르고 공격.
+
+            curHp = maxHp / 2;
+        }
+    }
+
+    public void Attack()
+    {
+
+
+    }
 
 }
-
-//Item 클래스 설정하기 => 객체를 생성하기 위한 설계도
-//클래스를 마음대로 설정할 수 있어야 고수다!!
-[System.Serializable]
+    //Item 클래스 설정하기 => 객체를 생성하기 위한 설계도
+    //클래스를 마음대로 설정할 수 있어야 고수다!!
+    [System.Serializable]
 public class Item
 {
     public string itemName;
