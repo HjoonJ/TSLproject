@@ -7,12 +7,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-
+    public GameMode gameMode;
     public Target[] targets;
     public Character[] characters;
 
-    public Enemy[] enemies;
 
+    public float duration;
+
+    public Transform[] enemyPopUpPoints;
     private void Awake()
     {
         if (Instance == null)
@@ -22,12 +24,35 @@ public class GameManager : MonoBehaviour
 
         characters = FindObjectsOfType<Character>();
 
-        enemies = FindObjectsOfType<Enemy>();
     }
 
     public void Start()
     {
+        gameMode = GameMode.Normal;
+
+        StartCoroutine(CoGameMode());
+    }
+
+    IEnumerator CoGameMode()
+    {
+        yield return new WaitForSeconds(duration);
+        gameMode = GameMode.Battle;
+
+        //타임라인 플레이시키기.
+
+        //몬스터 생성시키기 (어디, 어떻게)
+        EnemyManager.Instance.EnemySpawn();
+
+        //몬스터가 생성될 때까지 코드 대기
+
+
+        //캐릭터들을 Battle 모드로 바꾸기.
+        Character.Instance.React(BehaviourType.Battle);
         
+        //적의 숫자가 일정 수 이하 만큼 대기
+        
+        //현재 처치된 적 수가 절반인지 판단!!
+
     }
 
     // 가장 가까운 적을 설정하는 방법 (여러 곳에서 많이 활용됨!!)
@@ -65,21 +90,12 @@ public class GameManager : MonoBehaviour
         return characters[characterIdx];
     }
 
-    public Enemy GetClosestEnemy(Vector3 point)
-    {
-        float minDis = float.MaxValue;
-        int enemyIdx = 0;
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            float dis = Vector3.Distance(enemies[i].transform.position, point);
-            if (dis < minDis)
-            {
-                minDis = dis;
-                enemyIdx = i;
-            }
-        }
-        Debug.Log(minDis);
-        return enemies[enemyIdx];
-    }
+    
 
+
+    public enum GameMode
+    {
+        Normal,
+        Battle
+    }
 }

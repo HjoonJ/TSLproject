@@ -33,6 +33,7 @@ public enum BehaviourType
     Collect,
     LookAround,
     MoveToShop,
+    Battle,
 
     Count,
 }
