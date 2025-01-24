@@ -189,7 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 5650029136867932557}
   itemCount: {fileID: 2803883319509869781}
-  sellCanvas: {fileID: 0}
+  itemName: 
 --- !u!222 &9184867859269902905
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -274,7 +274,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3158483488868671814}
         m_TargetAssemblyTypeName: InventoryPanel, Assembly-CSharp
-        m_MethodName: OnClickedSell
+        m_MethodName: OnClickedPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

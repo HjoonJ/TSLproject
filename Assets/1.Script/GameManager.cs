@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     public float duration;
 
-    public Transform[] enemyPopUpPoints;
+    //public Transform[] enemyPopUpPoints;
     private void Awake()
     {
         if (Instance == null)
@@ -31,17 +31,23 @@ public class GameManager : MonoBehaviour
         gameMode = GameMode.Normal;
 
         StartCoroutine(CoGameMode());
+
+        
     }
 
     IEnumerator CoGameMode()
     {
+        // 일반모드 상황
+        
         yield return new WaitForSeconds(duration);
+        
+        // 배틀모드 상황
         gameMode = GameMode.Battle;
 
         //타임라인 플레이시키기.
 
         //몬스터 생성시키기 (어디, 어떻게)
-        EnemyManager.Instance.EnemySpawn();
+        EnemyManager.Instance.StartBattle();
 
         //몬스터가 생성될 때까지 코드 대기
 
@@ -51,7 +57,21 @@ public class GameManager : MonoBehaviour
         
         //적의 숫자가 일정 수 이하 만큼 대기
         
-        //현재 처치된 적 수가 절반인지 판단!!
+        //현재 처치된 적 수가 절반인지 판단!!<<EnemyManager의 리스트를 확인>>
+        while (true)
+        {
+            if (EnemyManager.Instance.enemies.Count <= EnemyManager.Instance.totalEnemies / 2)
+            {
+                
+                gameMode = GameMode.Normal;
+                break;
+            }
+            // 코루틴 안에서 While 문을 쓸때는 밑에 문장을 꼭 써야함!!!!
+            yield return null;
+        }
+        
+        
+
 
     }
 

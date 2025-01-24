@@ -17,7 +17,7 @@ public class PlayerHunter : Enemy
         Collider[] cols = Physics.OverlapSphere(attackPoint.position, attackRange, characterLayerMask);
         if (cols.Length <= 0)
         {
-            // 가장 가까운 캐릭터 찾고 이동시키는 코드 짜야함.
+            // 가장 가까운 캐릭터 찾고 이동시키는 코드.
             FindCharacter();
 
             return;
@@ -35,7 +35,7 @@ public class PlayerHunter : Enemy
         }
 
 
-        Debug.Log("Attack!!");
+        Debug.Log("Player Hunter Attack!!");
 
     }
 

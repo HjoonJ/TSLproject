@@ -6,14 +6,17 @@ public class Target : MonoBehaviour
 {
     // 타격 받는 순간 Hp 바 등장 및 일정 Hp 이하 시 불타는 이펙트 
 
-    public int hp;
+    //public int hp;
 
     public float maxHp;
     public float curHp; // current hp
 
     //public float maxShield = 100;
     //public float curShield; // current shield
-
+    public void Start()
+    {
+        TargetSetUp();
+    }
 
     public void TakeDamage(float damage)
     {
@@ -41,7 +44,7 @@ public class Target : MonoBehaviour
         }
     }
 
-    public void StartGame()
+    public void TargetSetUp()
     {
 
         curHp = maxHp;

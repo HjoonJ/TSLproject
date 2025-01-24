@@ -10,7 +10,7 @@ public class Character : MonoBehaviour
 
     public static Character Instance;
 
-    public int hp;
+    public LayerMask enemyLayerMask;
 
     public float maxHp;
     public float curHp; // current hp
@@ -44,7 +44,7 @@ public class Character : MonoBehaviour
 
         // 랜덤한 위치(rPoint)로 캐릭터 이동
         //destinationPoint = RandomPoint();
-        //MoveTo(destinationPoint);
+        //MoveTo(destinationPoint); 
 
         curHp = maxHp;
     }
@@ -66,7 +66,6 @@ public class Character : MonoBehaviour
                     arrivedCallback.Invoke();
                     arrivedCallback = null;
                 }
-
 
             }
         }

@@ -35,7 +35,7 @@ public class MeleeEnemy : Enemy
         }
         
 
-        Debug.Log("Attack!!");
+        Debug.Log("Melee Enemy Attack!!");
 
     }
     public override void FindTarget()

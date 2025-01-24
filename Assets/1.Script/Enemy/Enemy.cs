@@ -22,7 +22,8 @@ public class Enemy : MonoBehaviour
     public float moveSpeed;
     public float atkSpeed;
 
-    public Animator animator; // 캐릭터 애니메이션을 제어하는 컨포넌트
+    //public Animator animator; // 캐릭터 애니메이션을 제어하는 컨포넌트
+    
     Vector3 destinationPoint;
     Action arrivedCallback;
 
@@ -32,6 +33,8 @@ public class Enemy : MonoBehaviour
 
     public void Start()
     {
+        curHp = maxHp;
+
         FindTarget();
         FindCharacter();
     }
@@ -55,7 +58,8 @@ public class Enemy : MonoBehaviour
         {
             if (!agent.hasPath || agent.velocity.sqrMagnitude == 0)
             {
-                animator.SetBool("Walking", false);
+                //이동 애니메이션 중지.
+                //animator.SetBool("Walking", false);
 
                 // 도착 후 타겟 혹은 캐릭터를 바라봄
                 LookAtTarget();
@@ -91,6 +95,7 @@ public class Enemy : MonoBehaviour
 
     public void Arrived()
     {
+        Debug.Log("적 도착");
         StartCoroutine(CoAttack());
     }
     IEnumerator CoAttack()
@@ -99,6 +104,7 @@ public class Enemy : MonoBehaviour
         {
             yield return new WaitForSeconds(atkSpeed);
 
+            Debug.Log("적 공격!!");
             Attack();
         }
 
@@ -108,7 +114,10 @@ public class Enemy : MonoBehaviour
     {
         arrivedCallback = aCallback;
         agent.isStopped = false;
-        animator.SetBool("Walking", true);
+
+        //이동 애니메이션 실행.
+        //animator.SetBool("Walking", true);
+
         destinationPoint = des;
         agent.SetDestination(destinationPoint);
     }
@@ -127,7 +136,9 @@ public class Enemy : MonoBehaviour
         curHp -= d;
         if (curHp <= 0)
         {
-            Destroy(gameObject);   
+            EnemyManager.Instance.enemies.Remove(this);
+            Destroy(gameObject);
+
         }
     }
 }

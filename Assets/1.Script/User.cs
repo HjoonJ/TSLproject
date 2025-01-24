@@ -60,6 +60,7 @@ public class User : MonoBehaviour
         userItem.count += count;
         // 아이템 리스트가 업데이트 시 인벤토리 갱신
 
+        //인벤토리 캔버스가 비활성화 되어 있어서 에러가 발생.
         InventoryCanvas.Instance.InventoryUpdate();
 
         SaveMgr.SaveData("UserData", userData);

@@ -47,9 +47,9 @@ public class IdleBehaviour : CharacterBehaviour
         //테스트용으로 LookAround, Collect 등으로 설정
         //Character.Instance.React(BehaviourType.LookAround);
         
-        //Character.Instance.React(BehaviourType.Collect);
+        Character.Instance.React(BehaviourType.Collect);
 
-        Character.Instance.React(nextBehaviourType);
+        //Character.Instance.React(nextBehaviourType);
     }
 
 
