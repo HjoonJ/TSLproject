@@ -21,23 +21,28 @@ public class EnemyBullet : MonoBehaviour
 
     public void Update()
     {
-        //타겟 쪽으로 쏘아야함. 
-        if (target != null)
+        // 타겟이 유효한지 체크
+        if (target == null)
         {
-            // 타겟 방향
-            Vector3 direction = (target.transform.position - transform.position).normalized;
-
-            // 타겟 방향으로 이동
-            transform.position += direction * moveSpeed * Time.deltaTime;
+            // 타겟이 사라졌다면 총알을 삭제
+            Destroy(gameObject);
+            return;
         }
 
+        // 타겟 방향
+        Vector3 direction = (target.transform.position - transform.position).normalized;
+
+        // 타겟 방향으로 이동
+        transform.position += direction * moveSpeed * Time.deltaTime;
 
     }
 
     private void OnTriggerEnter(Collider collision)
     {
+
         if (collision.CompareTag("Target"))
         {
+            Debug.Log("총알 부딪힘");
             collision.GetComponent<Target>().TakeDamage(bulletPower);
             Destroy(gameObject);
         }

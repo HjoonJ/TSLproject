@@ -9,6 +9,13 @@ public class PlayerHunter : Enemy
 
     public override void Attack()
     {
+        // 캐릭터가 이미 hp=0이 되었으면 새로 찾음. -> 나중에 새로 짜야함.
+        if (character == null)
+        {
+            FindCharacter();
+            return;
+        }
+
 
         // attackPower를 가지고 있음. 
 
@@ -17,7 +24,7 @@ public class PlayerHunter : Enemy
         Collider[] cols = Physics.OverlapSphere(attackPoint.position, attackRange, characterLayerMask);
         if (cols.Length <= 0)
         {
-            // 가장 가까운 캐릭터 찾고 이동시키는 코드.
+            // OverlapSphere가 아무런 충돌체도 반환하지 않으면 새 캐릭터 찾기
             FindCharacter();
 
             return;
@@ -30,7 +37,13 @@ public class PlayerHunter : Enemy
             if (cols[i].gameObject.tag == "Character")
             {
                 // 휘두를때마다 Character의 TakeDamage 함수에다가 매개변수로 PlayerHunter의 attackPower를 전달해야함.
-                cols[i].gameObject.GetComponent<Character>().TakeDamage(attackPower);
+                Character c = cols[i].gameObject.GetComponent<Character>();
+                if (c != null)
+                {
+                    c.TakeDamage(attackPower);
+                }
+
+                //cols[i].gameObject.GetComponent<Character>().TakeDamage(attackPower);
             }
         }
 
@@ -47,6 +60,12 @@ public class PlayerHunter : Enemy
         // character 컨포넌트를 포함하고 있는 게임오브젝트 중 가장 가까운 것으로 이동.
         character = GameManager.Instance.GetClosestCharacter(transform.position);
 
+        if (character == null)
+        {
+            Debug.Log("유효한 타겟이 없음. 1초 후에 다시 시도");
+            Invoke("FindCharacter", 1f);  // 1초 후에 다시 캐릭터 찾기 시도
+            return;
+        }
 
         MoveTo(character.transform.position, Arrived);
 

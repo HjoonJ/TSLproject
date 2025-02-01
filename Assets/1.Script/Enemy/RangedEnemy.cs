@@ -9,6 +9,13 @@ public class RangedEnemy : Enemy
 
     public override void Attack()
     {
+        // 타겟이 이미 소멸되었으면 새로 찾음
+        if (target == null)
+        {
+            FindTarget();
+            return;
+        }
+
         EnemyBullet b = Instantiate(enemyBulletPrefeb);
         
         // Bullet 시작위치를 나중에 총구로 변환해야함.
@@ -28,6 +35,12 @@ public class RangedEnemy : Enemy
         // target 컨포넌트를 포함하고 있는 게임오브젝트 중 가장 가까운 것으로 이동.
         target = GameManager.Instance.GetClosestTarget(transform.position);
 
+        if (target == null)
+        {
+            Debug.Log("유효한 타겟이 없음. 1초 후에 다시 시도");
+            Invoke("FindTarget", 1f);  // 1초 후에 다시 타겟 찾기 시도
+            return;
+        }
 
         MoveTo(target.transform.position, Arrived);
 

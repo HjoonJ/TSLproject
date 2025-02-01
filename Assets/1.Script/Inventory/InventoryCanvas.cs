@@ -13,16 +13,21 @@ public class InventoryCanvas : MonoBehaviour
     // 인벤토리 창의 활성화 상태 관리
     public bool inventoryOpen = false;
 
-    public static InventoryCanvas Instance;
-
-    private void Awake()
+    private static InventoryCanvas instance;
+    
+    // 비활성화 되어 있는 컨포넌트를 쓰고 싶을 때 사용하는 속성 관련 내용.
+    public static InventoryCanvas Instance //속성(Property)
     {
-        if (Instance == null)
+        get
         {
-            Instance = this;
+            if (instance == null)
+                instance = FindFirstObjectByType<InventoryCanvas>(FindObjectsInactive.Include);
+
+            return instance;
         }
-      
     }
+
+
     private void Start()
     {
 

@@ -104,6 +104,14 @@ public class Enemy : MonoBehaviour
         {
             yield return new WaitForSeconds(atkSpeed);
 
+            // 타겟이 소멸된 경우
+            if (target == null)
+            {
+                Debug.Log("타겟이 소멸, 새 타겟 찾기");
+                FindTarget();
+                yield break;  // 코루틴 종료 (새로운 타겟 탐색 후 새로 CoAttack이 시작.)
+            }
+
             Debug.Log("적 공격!!");
             Attack();
         }

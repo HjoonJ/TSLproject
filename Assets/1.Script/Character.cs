@@ -28,8 +28,6 @@ public class Character : MonoBehaviour
 
     Action arrivedCallback;
 
-
-
     private void Awake()
     {
         if (Instance == null)
@@ -43,8 +41,8 @@ public class Character : MonoBehaviour
         React(BehaviourType.Idle);
 
         // 랜덤한 위치(rPoint)로 캐릭터 이동
-        //destinationPoint = RandomPoint();
-        //MoveTo(destinationPoint); 
+        // destinationPoint = RandomPoint();
+        // MoveTo(destinationPoint); 
 
         curHp = maxHp;
     }
@@ -108,7 +106,6 @@ public class Character : MonoBehaviour
 
     }
 
-
     public void MoveTo(Vector3 des, Action aCallback = null)
     {
         arrivedCallback = aCallback;
@@ -134,7 +131,7 @@ public class Character : MonoBehaviour
             curHp = maxHp / 2;
         }
     }
-
+    
     public void Attack()
     {
 

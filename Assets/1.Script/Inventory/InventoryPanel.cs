@@ -32,6 +32,5 @@ public class InventoryPanel : MonoBehaviour
         itemCount.text = item.count.ToString();
     }
 
-    
 
 }

@@ -79,38 +79,70 @@ public class GameManager : MonoBehaviour
     public Target GetClosestTarget(Vector3 point)
     {
         float minDis = float.MaxValue;
-        int targetIdx = 0;
+        Target closestTarget = null;
+
         for (int i = 0; i < targets.Length; i++)
         {
+            // ÀÌ¹Ì ÆÄ±«µÈ °´Ã¼´Â °Ç³Ê¶Ü
+            if (targets[i] == null) 
+                continue;
+
             float dis = Vector3.Distance(targets[i].transform.position, point);
             if (dis < minDis)
             {
                 minDis = dis;
-                targetIdx = i;
+                closestTarget = targets[i];
             }
         }
-        Debug.Log(minDis);
-        return targets[targetIdx];
+
+        if (closestTarget == null)
+        {
+            Debug.Log("no Target");
+        }
+        
+        return closestTarget;
     }
 
     public Character GetClosestCharacter(Vector3 point)
     {
         float minDis = float.MaxValue;
-        int characterIdx = 0;
+        Character closestCharacter = null;
+        
         for (int i = 0; i < characters.Length; i++)
         {
+            if (characters[i] == null)
+                continue;
+            
             float dis = Vector3.Distance(characters[i].transform.position, point);
             if (dis < minDis)
             {
                 minDis = dis;
-                characterIdx = i;
+                closestCharacter = characters[i];
             }
         }
-        Debug.Log(minDis);
-        return characters[characterIdx];
+        if (closestCharacter == null)
+        {
+            Debug.Log("no character");
+        }
+        
+       
+        return closestCharacter;
     }
 
-    
+    public void RemoveTarget(Target target)
+    {
+        for (int i = 0; i < targets.Length; i++)
+        {
+            if (targets[i] == target)
+            {
+                // ÆÄ±«µÇ´Â ÇØ´ç Å¸°ÙÀ» null·Î ¼³Á¤.
+                targets[i] = null; 
+                Debug.Log("Å¸°Ù Á¦°ÅµÊ");
+                break;
+            }
+        }
+    }
+
 
 
     public enum GameMode

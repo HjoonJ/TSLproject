@@ -4,28 +4,16 @@
     "playTime": 0.0,
     "userItems": [
         {
-            "itemName": "item0",
-            "count": 5
+            "itemName": "Mushroom",
+            "count": 15
         },
         {
-            "itemName": "item0",
-            "count": 5
+            "itemName": "Apple",
+            "count": 7
         },
         {
-            "itemName": "item0",
-            "count": 5
+            "itemName": "Potato",
+            "count": 9
         }
-    ],
-    "array": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10
     ]
 }

@@ -50,4 +50,10 @@ public class Target : MonoBehaviour
         curHp = maxHp;
         //curShield = maxShield;
     }
+
+    private void OnDestroy()
+    {
+        // GameManager에 자신의 제거를 알리는 로직
+        GameManager.Instance.RemoveTarget(this);
+    }
 }

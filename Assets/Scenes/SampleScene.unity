@@ -1765,7 +1765,7 @@ GameObject:
   - component: {fileID: 382698308}
   m_Layer: 8
   m_Name: House2
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1782,7 +1782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3230ca80c40592e4ba2efe9f92db18f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
+  maxHp: 200
   curHp: 0
 --- !u!65 &382698309
 BoxCollider:
@@ -1799,7 +1799,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1885,7 +1885,7 @@ GameObject:
   - component: {fileID: 400746872}
   m_Layer: 8
   m_Name: House
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1905,7 +1905,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -1988,7 +1988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3230ca80c40592e4ba2efe9f92db18f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
+  maxHp: 200
   curHp: 0
 --- !u!1 &408478792
 GameObject:
@@ -2755,6 +2755,7 @@ GameObject:
   - component: {fileID: 653841579}
   - component: {fileID: 653841578}
   - component: {fileID: 653841583}
+  - component: {fileID: 653841584}
   m_Layer: 9
   m_Name: Behaviours
   m_TagString: Untagged
@@ -2872,6 +2873,23 @@ MonoBehaviour:
   IsComplete: 0
   shopArea: {fileID: 0}
   arrived: 0
+--- !u!114 &653841584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653841576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f51ef9832d1a92d47b054c443087aa68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 6
+  IsComplete: 0
+  attackRange: 1
+  attackPoint: {fileID: 0}
+  attackPower: 0
 --- !u!1 &654084199
 GameObject:
   m_ObjectHideFlags: 0
@@ -3365,6 +3383,11 @@ MonoBehaviour:
     name: Mushroom
     description: .......
     price: 20
+  - key: Potato
+    thum: {fileID: 0}
+    name: Potato
+    description: .......
+    price: 15
 --- !u!4 &798925256
 Transform:
   m_ObjectHideFlags: 0
@@ -4865,7 +4888,7 @@ GameObject:
   - component: {fileID: 1007495438}
   m_Layer: 8
   m_Name: House3
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4882,7 +4905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3230ca80c40592e4ba2efe9f92db18f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
+  maxHp: 200
   curHp: 0
 --- !u!65 &1007495439
 BoxCollider:
@@ -4899,7 +4922,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -7843,7 +7866,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1806131499
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9835,7 +9858,7 @@ MonoBehaviour:
   gameMode: 0
   targets: []
   characters: []
-  duration: 10
+  duration: 6
 --- !u!4 &2132945616
 Transform:
   m_ObjectHideFlags: 0
