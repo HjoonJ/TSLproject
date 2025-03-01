@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
+using UnityEngine.XR;
 
 public class Character : MonoBehaviour
 {
     public NavMeshAgent agent;
 
-    public static Character Instance;
+    //public static Character Instance;
+
+    public CharacterType type;
 
     public LayerMask enemyLayerMask;
 
     public float maxHp;
     public float curHp; // current hp
+
+    public int attackSpeed;
+    [SerializeField] float attackRange = 1f;
+    [SerializeField] Transform attackPoint;
+    [SerializeField] int attackPower;
 
     //public float maxShield = 100;
     //public float curShield; // current shield
@@ -27,14 +35,28 @@ public class Character : MonoBehaviour
     Vector3 destinationPoint;
 
     Action arrivedCallback;
+    
 
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
+        //if (Instance == null)
+        //    Instance = this;
 
         behaviours = GetComponentsInChildren<CharacterBehaviour>();
     }
+
+    public void ChangeGameMode(GameMode gameMode)
+    {
+        if (gameMode == GameMode.Battle)
+        {
+            React(BehaviourType.Battle);
+        }
+        else
+        {
+            React(BehaviourType.Idle);
+        }
+    }
+
 
     private void Start()
     {
@@ -52,9 +74,9 @@ public class Character : MonoBehaviour
         curBehaviour.UpdateBehaviour();
 
         // 캐릭터가 특정 위치에 도착했다고 판별하는 if 코드
-        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+        if (agent.pathPending==false && agent.remainingDistance <= agent.stoppingDistance)
         {
-            if (!agent.hasPath || agent.velocity.sqrMagnitude == 0)
+            if (agent.hasPath==false || agent.velocity.sqrMagnitude == 0)
             {
                 animator.SetBool("Walking", false);
 
@@ -80,6 +102,8 @@ public class Character : MonoBehaviour
     // 넣고싶은 행동 기획하기
     public void React(BehaviourType type)
     {
+
+        
         for (int i = 0; i < behaviours.Length; i++)
         {
             if (behaviours[i].type == type)
@@ -132,9 +156,31 @@ public class Character : MonoBehaviour
         }
     }
     
-    public void Attack()
+    public virtual void Attack(Enemy enemy)
     {
+        // attackPower를 가지고 있음. 
 
+        // 범위를 지정해서 공격?
+        //코드로 충돌 확인
+        Collider[] cols = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayerMask);
+        if (cols.Length <= 0)
+        {
+            return;
+        }
+        // 칼로 써는 애니메이션 추가
+
+
+        for (int i = 0; i < cols.Length; i++)
+        {
+            if (cols[i].gameObject.tag == "Enemy")
+            {
+                // 휘두를때마다 Character의 TakeDamage 함수에다가 매개변수로 PlayerHunter의 attackPower를 전달해야함.
+                cols[i].gameObject.GetComponent<Enemy>().TakeDamage(attackPower);
+            }
+        }
+
+
+        Debug.Log("캐릭터가 적을 Attack!!");
 
     }
 

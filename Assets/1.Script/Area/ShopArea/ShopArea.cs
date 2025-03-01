@@ -17,8 +17,9 @@ public class ShopArea : Area
         inventorySellCanvas = FindObjectOfType<InventorySellCanvas>(true);
     }
 
-    public override void Arrived()
+    public override void Arrived(Character c)
     {
+        base.Arrived(c);
         StartCoroutine(shopCanvasOpen());
     }
 

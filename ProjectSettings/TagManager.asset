@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Character
   - Target
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Character
   - Enemy
   - 
-  - 
+  - Tree
   - 
   - 
   - 

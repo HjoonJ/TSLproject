@@ -7,6 +7,13 @@ public class CharacterBehaviour : MonoBehaviour
     
     //행동이 완성되었는지 아닌지.
     public bool IsComplete;
+
+    public Character character;
+
+    public void Awake()
+    {
+        character = GetComponentInParent<Character>();
+    }
     public virtual void EnterBehaviour()
     {
         IsComplete = false;

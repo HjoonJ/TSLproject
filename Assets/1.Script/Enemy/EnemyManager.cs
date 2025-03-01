@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -17,7 +18,6 @@ public class EnemyManager : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
-
 
     }
 
@@ -64,7 +64,7 @@ public class EnemyManager : MonoBehaviour
     public Enemy GetClosestEnemy(Vector3 point)
     {
         float minDis = float.MaxValue;
-        int enemyIdx = 0;
+        int enemyIdx = -1;
         for (int i = 0; i < enemies.Count; i++)
         {
             float dis = Vector3.Distance(enemies[i].transform.position, point);
@@ -74,8 +74,14 @@ public class EnemyManager : MonoBehaviour
                 enemyIdx = i;
             }
         }
+
+        if (enemyIdx == -1) 
+            return null;
+
         Debug.Log(minDis);
         return enemies[enemyIdx];
+
+
     }
 
 

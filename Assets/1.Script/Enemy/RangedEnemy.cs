@@ -32,14 +32,24 @@ public class RangedEnemy : Enemy
     {
         StopAllCoroutines();
 
+        Target t = GameManager.Instance.GetClosestTarget(transform.position);
+
         // target 컨포넌트를 포함하고 있는 게임오브젝트 중 가장 가까운 것으로 이동.
-        target = GameManager.Instance.GetClosestTarget(transform.position);
+        if ( t != null)
+        {
+            target = t.transform;
+        }
 
         if (target == null)
         {
+            agent.isStopped = true;
             Debug.Log("유효한 타겟이 없음. 1초 후에 다시 시도");
             Invoke("FindTarget", 1f);  // 1초 후에 다시 타겟 찾기 시도
             return;
+        }
+        else
+        {
+            agent.isStopped = false;
         }
 
         MoveTo(target.transform.position, Arrived);

@@ -30,45 +30,61 @@ public class GameManager : MonoBehaviour
     {
         gameMode = GameMode.Normal;
 
+        
         StartCoroutine(CoGameMode());
 
-        
+        //CharacterManager로부터 Character 1에 해당하는 컨포넌트 받기
+
+        Character character1 = CharacterManager.Instance.GetCharacter(CharacterType.Character1);
     }
 
     IEnumerator CoGameMode()
     {
-        // 일반모드 상황
-        
-        yield return new WaitForSeconds(duration);
-        
-        // 배틀모드 상황
-        gameMode = GameMode.Battle;
-
-        //타임라인 플레이시키기.
-
-        //몬스터 생성시키기 (어디, 어떻게)
-        EnemyManager.Instance.StartBattle();
-
-        //몬스터가 생성될 때까지 코드 대기
-
-
-        //캐릭터들을 Battle 모드로 바꾸기.
-        Character.Instance.React(BehaviourType.Battle);
-        
-        //적의 숫자가 일정 수 이하 만큼 대기
-        
-        //현재 처치된 적 수가 절반인지 판단!!<<EnemyManager의 리스트를 확인>>
         while (true)
         {
-            if (EnemyManager.Instance.enemies.Count <= EnemyManager.Instance.totalEnemies / 2)
+            // 일반모드 상황
+            for (int i = 0; i < CharacterManager.Instance.usingCharacters.Count; i++)
             {
-                
-                gameMode = GameMode.Normal;
-                break;
+                CharacterManager.Instance.usingCharacters[i].ChangeGameMode(gameMode);
             }
-            // 코루틴 안에서 While 문을 쓸때는 밑에 문장을 꼭 써야함!!!!
-            yield return null;
+
+
+            yield return new WaitForSeconds(duration);
+
+            // 배틀모드 상황
+            gameMode = GameMode.Battle;
+
+            //타임라인 플레이시키기.
+
+            //몬스터 생성시키기 (어디, 어떻게)
+            EnemyManager.Instance.StartBattle();
+
+            //몬스터가 생성될 때까지 코드 대기
+
+
+            //캐릭터들을 Battle 모드로 바꾸기
+
+            for (int i = 0; i < CharacterManager.Instance.usingCharacters.Count; i++)
+            {
+                CharacterManager.Instance.usingCharacters[i].ChangeGameMode(gameMode);
+            }
+
+            //적의 숫자가 일정 수 이하 만큼 대기
+
+            //현재 처치된 적 수가 절반인지 판단!!<<EnemyManager의 리스트를 확인>>
+            while (true)
+            {
+                if (EnemyManager.Instance.enemies.Count <= EnemyManager.Instance.totalEnemies / 2)
+                {
+
+                    gameMode = GameMode.Normal;
+                    break;
+                }
+                // 코루틴 안에서 While 문을 쓸때는 밑에 문장을 꼭 써야함!!!!
+                yield return null;
+            }
         }
+        
         
         
 
@@ -143,11 +159,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+}
 
 
-    public enum GameMode
-    {
-        Normal,
-        Battle
-    }
+public enum GameMode
+{
+    Normal,
+    Battle
 }

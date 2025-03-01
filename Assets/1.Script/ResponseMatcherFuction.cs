@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static UnityEngine.InputSystem.OnScreen.OnScreenStick;
 
 public class ResponseMatcherFunction : MonoBehaviour
 {
@@ -23,17 +22,20 @@ public class ResponseMatcherFunction : MonoBehaviour
         {
             bool matched = false;
 
-            for (int j = 0; j < responses[i].behaviourTypes.Length; j++)
-            { 
-                if (Character.Instance.curBehaviour.type == responses[i].behaviourTypes[j])
+            if (CharacterManager.Instance.selectedCharacter != null)
+            {
+                for (int j = 0; j < responses[i].behaviourTypes.Length; j++)
                 {
-                    
-                    matched = true;
-                    break;
-                }
+                    if (CharacterManager.Instance.selectedCharacter.curBehaviour.type == responses[i].behaviourTypes[j])
+                    {
 
-            
+                        matched = true;
+                        break;
+                    }
+
+                }
             }
+            
 
             responses[i].gameObject.SetActive(matched);
         }

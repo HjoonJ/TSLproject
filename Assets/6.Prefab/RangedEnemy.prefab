@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1226828612177232906}
   - component: {fileID: 603189912041919051}
   - component: {fileID: 5938102578240361158}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 1526967180735425369}
   - component: {fileID: 1890957578758015573}
   - component: {fileID: 4400830083367188412}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,9 +221,9 @@ GameObject:
   - component: {fileID: 4356369197354028815}
   - component: {fileID: 5490126758906309351}
   - component: {fileID: 2260918693993075846}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RangedEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -271,7 +271,6 @@ MonoBehaviour:
   moveSpeed: 0.5
   atkSpeed: 2
   target: {fileID: 0}
-  character: {fileID: 0}
   enemyBulletPrefeb: {fileID: 6790256135137280511, guid: 3db4f0732d3b14741a8cc85e7ff31240, type: 3}
 --- !u!195 &2260918693993075846
 NavMeshAgent:
@@ -282,7 +281,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3479391132197304378}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.2
   m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50

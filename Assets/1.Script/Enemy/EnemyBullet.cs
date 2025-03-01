@@ -9,11 +9,11 @@ public class EnemyBullet : MonoBehaviour
     //공격력
     public float bulletPower;
 
-    Target target;
+    Transform target;
     
 
     //공격력과 타켓을 전달하는 함수
-    public void Shoot(float power, Target t)
+    public void Shoot(float power, Transform t)
     {
         bulletPower = power;
         target = t;

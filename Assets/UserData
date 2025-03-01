@@ -5,15 +5,15 @@
     "userItems": [
         {
             "itemName": "Mushroom",
-            "count": 15
+            "count": 27
         },
         {
             "itemName": "Apple",
-            "count": 7
+            "count": 22
         },
         {
             "itemName": "Potato",
-            "count": 9
+            "count": 27
         }
     ]
 }

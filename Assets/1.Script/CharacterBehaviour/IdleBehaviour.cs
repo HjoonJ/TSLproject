@@ -18,7 +18,7 @@ public class IdleBehaviour : CharacterBehaviour
         //2-4초 간격으로 다음 행동을 결정
         timer = Random.Range(2f, 4f);
 
-        Character.Instance.animator.Play("Idle");
+        character.animator.Play("Idle");
 
     }
 
@@ -46,8 +46,8 @@ public class IdleBehaviour : CharacterBehaviour
 
         //테스트용으로 LookAround, Collect 등으로 설정
         //Character.Instance.React(BehaviourType.LookAround);
-        
-        Character.Instance.React(BehaviourType.Collect);
+
+        character.React(BehaviourType.Collect);
 
         //Character.Instance.React(nextBehaviourType);
     }

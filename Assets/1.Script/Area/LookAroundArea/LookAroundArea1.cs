@@ -8,8 +8,11 @@ public class LookAroundArea1 : LookAroundArea
     public int curInx = 0;
     public int loopCount = 0;
     public int maxLoopCount = 2;
-    public override void Arrived()
+    
+    public override void Arrived(Character c)
     {
+        base.Arrived(c);
+        
         Debug.Log("구경할 수 있는 장소 도착");
 
         curInx = 0;
@@ -17,12 +20,15 @@ public class LookAroundArea1 : LookAroundArea
         // 순회 횟수 초기화
         loopCount = 0; 
 
-        Character.Instance.MoveTo(points[curInx].position);
+        c.MoveTo(points[curInx].position);
         
 
     }
     public void Update()
     {
+        if (character == null)
+            return;
+        
         if (loopCount >= maxLoopCount)
         {
             return;
@@ -30,7 +36,7 @@ public class LookAroundArea1 : LookAroundArea
 
 
         // 0,1,2 위치를 2번 반복해서 이동
-        if (Vector2.Distance(points[curInx].position, Character.Instance.transform.position) <= 0.1f)
+        if (Vector2.Distance(points[curInx].position, character.transform.position) <= 0.1f)
         {
             curInx++;
 
@@ -42,12 +48,14 @@ public class LookAroundArea1 : LookAroundArea
 
             if (loopCount < maxLoopCount)
             {
-                Character.Instance.MoveTo(points[curInx].position);
+                character.MoveTo(points[curInx].position);
             }
             else
             {
                 // 1초 후 Idle 상태로 변경
-                StartCoroutine(BackToIdle(1)); 
+
+                StartCoroutine(BackToIdle(1));
+
             }
 
         }
@@ -59,8 +67,9 @@ public class LookAroundArea1 : LookAroundArea
         yield return new WaitForSeconds(d);
 
         // Idle 상태로 변경
-        Character.Instance.animator.Play("Idle");
-        Character.Instance.React(BehaviourType.Idle);
+        character.animator.Play("Idle");
+        character.React(BehaviourType.Idle);
+        character = null;
     }
 
 }

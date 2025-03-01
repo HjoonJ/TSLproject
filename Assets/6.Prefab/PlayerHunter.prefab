@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1164603839186269655}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 8489279075292073123}
   - component: {fileID: 6014099947913289635}
   - component: {fileID: 6126684759727014019}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,9 +147,9 @@ GameObject:
   - component: {fileID: 1093630138217765138}
   - component: {fileID: 4058491440499222180}
   - component: {fileID: 1757240645027032171}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PlayerHunter
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -198,7 +198,6 @@ MonoBehaviour:
   moveSpeed: 1
   atkSpeed: 1
   target: {fileID: 0}
-  character: {fileID: 0}
   attackRange: 1
   attackPoint: {fileID: 1164603839186269655}
 --- !u!195 &1757240645027032171
@@ -210,12 +209,12 @@ NavMeshAgent:
   m_GameObject: {fileID: 6320372695982018001}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.1
   m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0.5
+  m_StoppingDistance: 0.2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -235,7 +234,7 @@ GameObject:
   - component: {fileID: 7749502756494946905}
   - component: {fileID: 9182136695415220333}
   - component: {fileID: 6696413551045200155}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}

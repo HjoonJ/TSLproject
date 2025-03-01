@@ -13,6 +13,7 @@ public class CollectBehaviour : CharacterBehaviour
 
     //public CollectingArea1 area1;
 
+    public bool areaTaken;
 
     public CollectBehaviour()
     {
@@ -28,11 +29,12 @@ public class CollectBehaviour : CharacterBehaviour
     // 나무에 열린 열매를 채집하거나 땅에 있는 식물 채집
     public override void EnterBehaviour()
     {
+        //수집 가능한 지역이 담기는 리스트.
         List<CollectingArea> list = new List<CollectingArea>();
 
         for (int i = 0; i < collectingAreas.Length; i++)
         {
-            if (collectingAreas[i].canCollecting == true)
+            if (collectingAreas[i].character == null && collectingAreas[i].canCollecting == true)
             {
                 list.Add (collectingAreas[i]);
             }
@@ -40,15 +42,18 @@ public class CollectBehaviour : CharacterBehaviour
         
         if (list.Count <= 0)
         {
-            Character.Instance.React(BehaviourType.Idle);
+            character.React(BehaviourType.Idle);
             return;
         }
 
         int count = list.Count;
         int d = Random.Range(0, count);
 
-        targetArea = collectingAreas[d];
-        Character.Instance.MoveTo(targetArea.transform.position);
+        targetArea = list[d];
+        targetArea.TakeArea(character);
+
+        character.MoveTo(targetArea.transform.position);
+
     }
     public override void UpdateBehaviour()
     {
@@ -62,16 +67,16 @@ public class CollectBehaviour : CharacterBehaviour
 
 
         // 도착 후 수집
-        float distance = Vector3.Distance(Character.Instance.transform.position, targetArea.transform.position);
+        float distance = Vector3.Distance(character.transform.position, targetArea.transform.position);
 
         
-        if (Vector3.Distance(Character.Instance.transform.position, targetArea.transform.position) <= targetArea.areaDistance)
+        if (Vector3.Distance(character.transform.position, targetArea.transform.position) <= targetArea.areaDistance)
 
         {
             //캐릭터 멈춰세우기.
-            Character.Instance.StopMoving();
+            character.StopMoving();
             arrived = true;
-            targetArea.Arrived();
+            targetArea.Arrived(character);
 
         }
         
@@ -100,7 +105,7 @@ public class CollectBehaviour : CharacterBehaviour
                 Debug.Log("5개 아이템수집");
 
                 //MoveToShopArea(); - 행동 마무리까지 포함.
-                Character.Instance.React(BehaviourType.MoveToShop);
+                character.React(BehaviourType.MoveToShop);
 
             }
 

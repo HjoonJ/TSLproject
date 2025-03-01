@@ -6,8 +6,9 @@ public class LookAroundArea2 : LookAroundArea
 {
     // 도착 후 특정 애니메이션(호흡하는 애니메이션//임시로 Idle) 전환 후 2초 뒤 lookAt 애니메이션 호출
 
-    public override void Arrived()
+    public override void Arrived(Character c)
     {
+        base.Arrived(c);
         Debug.Log("LookAt 2초 후 실행");
         //Character.Instance.animator.Play("Idle");
         //Invoke("LookAt", 2);
@@ -18,16 +19,18 @@ public class LookAroundArea2 : LookAroundArea
     {
         //2초 기다림
         yield return new WaitForSeconds(2);
-        Character.Instance.animator.Play("LookAt");
+        character.animator.Play("LookAt");
 
         //한프레임 기다림
         yield return null;
-        float lookAtAnimTime = Character.Instance.animator.GetCurrentAnimatorStateInfo(0).length;
+        float lookAtAnimTime = character.animator.GetCurrentAnimatorStateInfo(0).length;
         yield return new WaitForSeconds(lookAtAnimTime);
-        Character.Instance.animator.Play("Idle");
+        character.animator.Play("Idle");
         
         yield return new WaitForSeconds(1);
-        Character.Instance.React(BehaviourType.Idle);
+
+        character.React(BehaviourType.Idle);
+        character = null;
     }
 
     public void Update()

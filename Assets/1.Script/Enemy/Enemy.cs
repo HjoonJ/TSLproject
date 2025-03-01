@@ -27,9 +27,9 @@ public class Enemy : MonoBehaviour
     Vector3 destinationPoint;
     Action arrivedCallback;
 
-    public Target target;
+    public Transform target;
 
-    public Character character;
+    //public Character character;
 
     public void Start()
     {
@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
 
     }
 
-    private void Update()
+    public virtual void Update()
     {
        
 
@@ -95,7 +95,7 @@ public class Enemy : MonoBehaviour
 
     public void Arrived()
     {
-        Debug.Log("적 도착");
+        Debug.Log("적이 도착");
         StartCoroutine(CoAttack());
     }
     IEnumerator CoAttack()
@@ -109,10 +109,19 @@ public class Enemy : MonoBehaviour
             {
                 Debug.Log("타겟이 소멸, 새 타겟 찾기");
                 FindTarget();
-                yield break;  // 코루틴 종료 (새로운 타겟 탐색 후 새로 CoAttack이 시작.)
+                continue;  // 코루틴 종료 (새로운 타겟 탐색 후 새로 CoAttack이 시작.)
             }
 
-            Debug.Log("적 공격!!");
+            //// 캐릭터가 소멸된 경우
+            //if (character == null)
+            //{
+            //    Debug.Log("캐릭터 소멸, 새 캐릭터 찾기");
+            //    FindCharacter();
+            //    continue;  // 코루틴 종료 (새로운 타겟 탐색 후 새로 CoAttack이 시작.)
+            //}
+
+            Debug.Log("적의 공격!!");
+
             Attack();
         }
 

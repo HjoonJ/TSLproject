@@ -6,7 +6,7 @@ public class CollectingArea : Area
 {
     public bool canCollecting = true;
 
-    public Collection[] collections;
+    public Collection[] collections; // 해당 지역에서 수집할 수 있는 오브젝트
     public int collectedTargets = 0;  // 수집된 물건
 
     public string collectMotion;
@@ -35,8 +35,9 @@ public class CollectingArea : Area
 
     // 캐릭터가 물체가 있는지 없는지 확인 해야함.
 
-    public override void Arrived()
+    public override void Arrived(Character c)
     {
+        base.Arrived(c);
         //활성화되어 있는 사과들을 순차적으로 접근하는 코드 필요.
         Debug.Log("수집 지역 도착");
         StartCoroutine(CollectApple()); // 코루틴실행시 서브 스레드 형성된거 "처럼" 실행됨
@@ -46,18 +47,32 @@ public class CollectingArea : Area
 
     public void Update()
     {
+        CheckCanCollecting();
+
+    }
+
+    public void CheckCanCollecting()
+    {
         canCollecting = false;
 
-        for (int i = 0; i < collections.Length; i++)
+        if (character == null)
         {
-            if (collections[i].gameObject.activeSelf)
+            for (int i = 0; i < collections.Length; i++)
             {
-                canCollecting = true;
-                break;
+                if (collections[i].gameObject.activeSelf)
+                {
+                    canCollecting = true;
+                    break;
+                }
             }
         }
 
+    }
 
+    public override void TakeArea(Character c)
+    {
+        base.TakeArea(c);
+        CheckCanCollecting();
     }
 
 
@@ -72,7 +87,7 @@ public class CollectingArea : Area
                 Vector3 applePoint = collections[i].gameObject.transform.position;
                 applePoint.y = 0;
                 bool arrived = false;
-                Character.Instance.MoveTo(applePoint, () =>
+                character.MoveTo(applePoint, () =>
                 {
                     Debug.Log("목적지에 도착함!");
                     arrived = true;
@@ -87,10 +102,10 @@ public class CollectingArea : Area
                 });
 
                 if (string.IsNullOrEmpty(collectMotion) ==false)
-                    Character.Instance.animator.Play(collectMotion);
+                    character.animator.Play(collectMotion);
 
                 yield return null;
-                float animTime = Character.Instance.animator.GetCurrentAnimatorStateInfo(0).length;
+                float animTime = character.animator.GetCurrentAnimatorStateInfo(0).length;
                 yield return new WaitForSeconds(animTime);
 
                 //어느 시점! 누구를 2분있다가 활성화 시키기!!
@@ -107,8 +122,12 @@ public class CollectingArea : Area
 
 
         yield return new WaitForSeconds(2);  // 다음 수집까지 대기
+
         //수집후 Idle 상태로 전환
-        Character.Instance.React(BehaviourType.Idle);
+        character.React(BehaviourType.Idle);
+
+        // 에리어 차지하고 있는 캐릭터 빼기 (중요!!!)
+        character = null;
     }
 
     private IEnumerator EnableApples(float d)
