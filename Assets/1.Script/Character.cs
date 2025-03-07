@@ -19,9 +19,9 @@ public class Character : MonoBehaviour
     public float curHp; // current hp
 
     public int attackSpeed;
-    [SerializeField] float attackRange = 1f;
-    [SerializeField] Transform attackPoint;
-    [SerializeField] int attackPower;
+    [SerializeField] public float attackRange = 1f;
+    [SerializeField] public Transform attackPoint;
+    [SerializeField] public int attackPower;
 
     //public float maxShield = 100;
     //public float curShield; // current shield
@@ -80,6 +80,9 @@ public class Character : MonoBehaviour
             {
                 animator.SetBool("Walking", false);
 
+
+
+
                 if (arrivedCallback != null)
                 {
                     // arrivedCallback 에 담겨있는 함수를 실행하라 (Invoke)
@@ -129,6 +132,8 @@ public class Character : MonoBehaviour
         return randomPoint;
 
     }
+
+
 
     public void MoveTo(Vector3 des, Action aCallback = null)
     {

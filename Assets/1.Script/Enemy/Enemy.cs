@@ -95,7 +95,7 @@ public class Enemy : MonoBehaviour
 
     public void Arrived()
     {
-        Debug.Log("적이 도착");
+        //Debug.Log("적이 도착");
         StartCoroutine(CoAttack());
     }
     IEnumerator CoAttack()
@@ -120,7 +120,7 @@ public class Enemy : MonoBehaviour
             //    continue;  // 코루틴 종료 (새로운 타겟 탐색 후 새로 CoAttack이 시작.)
             //}
 
-            Debug.Log("적의 공격!!");
+            //Debug.Log("적의 공격!!");
 
             Attack();
         }

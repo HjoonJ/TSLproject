@@ -42,7 +42,7 @@ public class EnemyBullet : MonoBehaviour
 
         if (collision.CompareTag("Target"))
         {
-            Debug.Log("ÃÑ¾Ë ºÎµúÈû");
+            //Debug.Log("ÃÑ¾Ë ºÎµúÈû");
             collision.GetComponent<Target>().TakeDamage(bulletPower);
             Destroy(gameObject);
         }

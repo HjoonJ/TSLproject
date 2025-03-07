@@ -24,7 +24,7 @@ public class RangedEnemy : Enemy
         //공격력 및 타켓을 전달받음.
         b.Shoot(attackPower, target);
 
-        Debug.Log("Ranged Enemy Attack!!");
+        //Debug.Log("Ranged Enemy Attack!!");
 
     }
 
