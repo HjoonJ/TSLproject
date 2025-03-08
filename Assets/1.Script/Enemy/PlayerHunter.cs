@@ -57,7 +57,7 @@ public class PlayerHunter : Enemy
         }
 
 
-        Debug.Log("Player Hunter Attack!!");
+        //Debug.Log("Player Hunter Attack!!");
 
     }
 
@@ -71,7 +71,7 @@ public class PlayerHunter : Enemy
 
         if (target == null)
         {
-            Debug.Log("유효한 타겟이 없음. 1초 후에 다시 시도");
+            //Debug.Log("유효한 타겟이 없음. 1초 후에 다시 시도");
             Invoke("FindTarget", 1f);  // 1초 후에 다시 캐릭터 찾기 시도
             return;
         }

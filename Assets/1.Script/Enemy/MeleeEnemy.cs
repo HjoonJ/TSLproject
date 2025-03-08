@@ -67,7 +67,7 @@ public class MeleeEnemy : Enemy
         if (target == null)
         {
             agent.isStopped = true;
-            Debug.Log("유효한 타겟이 없음. 1초 후에 다시 시도");
+            //Debug.Log("유효한 타겟이 없음. 1초 후에 다시 시도");
             Invoke("FindTarget", 1f);  // 1초 후에 다시 타겟 찾기 시도
             return;
         }

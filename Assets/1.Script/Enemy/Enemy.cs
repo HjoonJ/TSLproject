@@ -107,7 +107,7 @@ public class Enemy : MonoBehaviour
             // 鸥百捞 家戈等 版快
             if (target == null)
             {
-                Debug.Log("鸥百捞 家戈, 货 鸥百 茫扁");
+                //Debug.Log("鸥百捞 家戈, 货 鸥百 茫扁");
                 FindTarget();
                 continue;  // 内风凭 辆丰 (货肺款 鸥百 沤祸 饶 货肺 CoAttack捞 矫累.)
             }

@@ -642,7 +642,7 @@ MonoBehaviour:
   maxHp: 100
   curHp: 0
   attackSpeed: 1
-  attackRange: 0.88
+  attackRange: 0.37
   attackPoint: {fileID: 1974692330}
   attackPower: 10
   behaviours: []
@@ -1624,7 +1624,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 226853826}
-  - component: {fileID: 226853827}
   m_Layer: 0
   m_Name: AttackPoint
   m_TagString: Untagged
@@ -1647,27 +1646,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 257509674}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &226853827
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 226853825}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.1, y: 1, z: 0.1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &247760282
 GameObject:
   m_ObjectHideFlags: 0
@@ -2151,6 +2129,7 @@ MonoBehaviour:
   IsComplete: 0
   character: {fileID: 0}
   enemy: {fileID: 0}
+  checkCoAttack: 0
 --- !u!114 &286592835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2952,7 +2931,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 401782151}
-  - component: {fileID: 401782152}
   m_Layer: 0
   m_Name: AttackPoint
   m_TagString: Untagged
@@ -2975,27 +2953,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2102733482}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &401782152
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 401782150}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.1, y: 1, z: 0.1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &408478792
 GameObject:
   m_ObjectHideFlags: 0
@@ -3902,6 +3859,7 @@ MonoBehaviour:
   IsComplete: 0
   character: {fileID: 0}
   enemy: {fileID: 0}
+  checkCoAttack: 0
 --- !u!1 &654084199
 GameObject:
   m_ObjectHideFlags: 0
@@ -4926,6 +4884,7 @@ MonoBehaviour:
   IsComplete: 0
   character: {fileID: 0}
   enemy: {fileID: 0}
+  checkCoAttack: 0
 --- !u!114 &814055731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9213,7 +9172,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &1527591044
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -10143,7 +10102,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &1744858232
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -11896,7 +11855,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1974692330}
-  - component: {fileID: 1974692331}
   m_Layer: 0
   m_Name: AttackPoint
   m_TagString: Untagged
@@ -11919,27 +11877,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 790573504}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1974692331
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1974692329}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.1, y: 1, z: 0.1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1978781393
 GameObject:
   m_ObjectHideFlags: 0
@@ -12872,7 +12809,7 @@ MonoBehaviour:
   gameMode: 0
   targets: []
   characters: []
-  duration: 7
+  duration: 2
 --- !u!4 &2132945616
 Transform:
   m_ObjectHideFlags: 0

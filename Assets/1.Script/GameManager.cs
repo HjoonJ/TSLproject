@@ -74,8 +74,18 @@ public class GameManager : MonoBehaviour
             //현재 처치된 적 수가 절반인지 판단!!<<EnemyManager의 리스트를 확인>>
             while (true)
             {
+                
                 if (EnemyManager.Instance.enemies.Count <= EnemyManager.Instance.totalEnemies / 2)
                 {
+
+                    for (int i = 0; i < EnemyManager.Instance.enemies.Count; i++)
+                    {
+                        if (EnemyManager.Instance.enemies[i] != null)
+                        {
+                            Destroy(EnemyManager.Instance.enemies[i].gameObject);
+                        }
+                    }
+                    EnemyManager.Instance.enemies.Clear();
 
                     gameMode = GameMode.Normal;
                     break;
@@ -113,7 +123,7 @@ public class GameManager : MonoBehaviour
 
         if (closestTarget == null)
         {
-            Debug.Log("no Target");
+            //Debug.Log("no Target");
         }
         
         return closestTarget;

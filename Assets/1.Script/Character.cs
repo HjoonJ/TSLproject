@@ -180,14 +180,19 @@ public class Character : MonoBehaviour
             if (cols[i].gameObject.tag == "Enemy")
             {
                 // 휘두를때마다 Character의 TakeDamage 함수에다가 매개변수로 PlayerHunter의 attackPower를 전달해야함.
+                Debug.Log($"적에게 데미지 들어가야함 {cols[i].name}");
                 cols[i].gameObject.GetComponent<Enemy>().TakeDamage(attackPower);
             }
         }
-
-
-        Debug.Log("캐릭터가 적을 Attack!!");
+        //Debug.Log("캐릭터가 적을 Attack!!");
 
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
 
 }
     //Item 클래스 설정하기 => 객체를 생성하기 위한 설계도

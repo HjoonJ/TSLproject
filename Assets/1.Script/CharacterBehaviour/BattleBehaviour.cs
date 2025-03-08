@@ -38,39 +38,43 @@ public class BattleBehaviour : CharacterBehaviour
         Debug.Log($"BattleBehaviour FindEnemy() {character.gameObject.name} enemy name {enemy.name} ");
         //Debug.Log("가까운 적 찾음");
 
+        LookAtEnemy();
+
         StartCoroutine(CoCheckFrontEnemy());
     }
     
     IEnumerator CoCheckFrontEnemy()
     {
        
-            while (true && checkCoAttack== false)
+        while (true && checkCoAttack== false)
+        {
+            yield return new WaitForSeconds(0.5f);
+
+            Collider[] cols = Physics.OverlapSphere(character.attackPoint.position, character.attackRange, character.enemyLayerMask);
+            Debug.Log($"BattleBehaviour CoCheckFrontEnemy() cols.Length {cols.Length}");
+            if (cols.Length <= 0)
             {
-                yield return new WaitForSeconds(0.5f);
-
-                Collider[] cols = Physics.OverlapSphere(character.attackPoint.position, character.attackRange, character.enemyLayerMask);
-
-                if (cols.Length <= 0)
-                {
-                    continue;
-                }
-
-
-                for (int i = 0; i < cols.Length; i++)
-                {
-                    if (cols[i].gameObject.tag == "Enemy")
-                    {
-
-                        enemy = cols[i].gameObject.GetComponent<Enemy>();
-                        checkCoAttack = true;
-                        StartCoroutine(CoAttack());
-
-
-                        break;
-                    }
-                }
-
+                continue;
             }
+
+
+            for (int i = 0; i < cols.Length; i++)
+            {
+                Debug.Log($"BattleBehaviour cols[i].name {cols[i].name}");
+                if (cols[i].gameObject.tag == "Enemy")
+                {
+
+                    enemy = cols[i].gameObject.GetComponent<Enemy>();
+                    Debug.Log($"때리기 직전의 enemy {enemy.name}");
+                    checkCoAttack = true;
+                    StartCoroutine(CoAttack());
+
+
+                    break; // 가장 가까운 반복문 종료
+                }
+            }
+
+        }
         
     }
     public override void UpdateBehaviour()
@@ -113,25 +117,27 @@ public class BattleBehaviour : CharacterBehaviour
             // 타겟이 소멸된 경우
             if (enemy == null)
             {
-                Debug.Log("타겟이 소멸, 새 타겟 찾기");
+                Debug.Log("BattleBehaviour CoAttack() if (enemy == null) 적이 소멸, 새 적 찾기");
+                checkCoAttack = false;
                 FindEnemy();
                 yield break;  // 코루틴 종료 (새로운 타겟 탐색 후 새로 CoAttack이 시작.)
             }
 
             // 1초마다 새로운 가장 가까운 적을 확인
-            yield return new WaitForSeconds(1f);
+            //yield return new WaitForSeconds(1f);
 
             Enemy closestEnemy = EnemyManager.Instance.GetClosestEnemy(transform.position);
             
             // 가장 가까운 적으로 교체
             if (closestEnemy != null && closestEnemy != enemy)
             {
+                Debug.Log("BattleBehaviour CoAttack() if (closestEnemy != null && closestEnemy != enemy)");
                 float currentDistance = Vector3.Distance(transform.position, enemy.transform.position);
                 float newDistance = Vector3.Distance(transform.position, closestEnemy.transform.position);
                 
                 if (newDistance < currentDistance)
                 {
-                    Debug.Log("더 가까운 적 발견, 타겟 교체");
+                    Debug.Log($"BattleBehaviour CoAttack() 더 가까운 적 발견, 타겟 교체 {closestEnemy.name}");
                     enemy = closestEnemy;
 
                 }
@@ -143,7 +149,7 @@ public class BattleBehaviour : CharacterBehaviour
             
             if (distanceToEnemy > character.attackRange)
             {
-                Debug.Log("적이 공격 범위 밖으로 이동, 새로운 적 탐색");
+                Debug.Log("BattleBehaviour CoAttack() if (distanceToEnemy > character.attackRange) 적이 공격 범위 밖으로 이동, 새로운 적 탐색");
                 
                 checkCoAttack = false; // 공격 상태 해제
                 FindEnemy();
@@ -151,11 +157,12 @@ public class BattleBehaviour : CharacterBehaviour
                 yield break;
             }
 
-            yield return new WaitForSeconds(character.attackSpeed);
-
-            Debug.Log("적 공격!!");
+            Debug.Log("BattleBehaviour CoAttack() 적 공격!!");
             // 캐릭터가 가진 Attack() 함수 호출하고 enemy 전달
             character.Attack(enemy);
+
+            yield return new WaitForSeconds(character.attackSpeed);
+
         }
 
     }
