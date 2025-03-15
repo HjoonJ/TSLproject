@@ -28,6 +28,7 @@ public class BattleBehaviour : CharacterBehaviour
 
     }
 
+
     public void FindEnemy()
     {
         StopAllCoroutines();
@@ -35,7 +36,11 @@ public class BattleBehaviour : CharacterBehaviour
         // character 컨포넌트를 포함하고 있는 게임오브젝트 중 가장 가까운 것으로 이동.
         enemy = EnemyManager.Instance.GetClosestEnemy(transform.position);
 
-        Debug.Log($"BattleBehaviour FindEnemy() {character.gameObject.name} enemy name {enemy.name} ");
+        if (enemy != null) 
+        {
+            Debug.Log($"BattleBehaviour FindEnemy() {character.gameObject.name} enemy name {enemy.name} ");
+        }
+        
         //Debug.Log("가까운 적 찾음");
 
         LookAtEnemy();
@@ -48,7 +53,7 @@ public class BattleBehaviour : CharacterBehaviour
        
         while (true && checkCoAttack== false)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.2f);
 
             Collider[] cols = Physics.OverlapSphere(character.attackPoint.position, character.attackRange, character.enemyLayerMask);
             Debug.Log($"BattleBehaviour CoCheckFrontEnemy() cols.Length {cols.Length}");
@@ -66,7 +71,11 @@ public class BattleBehaviour : CharacterBehaviour
 
                     enemy = cols[i].gameObject.GetComponent<Enemy>();
                     Debug.Log($"때리기 직전의 enemy {enemy.name}");
+                    
+                    character.StopMoving();
+                    LookAtEnemy();
                     checkCoAttack = true;
+                    character.animator.SetBool("Walking", false);
                     StartCoroutine(CoAttack());
 
 
@@ -102,6 +111,8 @@ public class BattleBehaviour : CharacterBehaviour
 
     public void Arrived()
     {
+        
+        
         //Debug.Log("적에게 도착");
         //StartCoroutine(CoAttack());
     }
@@ -143,24 +154,40 @@ public class BattleBehaviour : CharacterBehaviour
                 }
             }
 
-
-            //  현재 적과의 거리를 매 공격 주기마다 확인
-            float distanceToEnemy = Vector3.Distance(character.attackPoint.position, enemy.transform.position);
+            Collider[] cols = Physics.OverlapSphere(character.attackPoint.position, character.attackRange, character.enemyLayerMask);
             
-            if (distanceToEnemy > character.attackRange)
+            if (cols.Length <= 0)
             {
-                Debug.Log("BattleBehaviour CoAttack() if (distanceToEnemy > character.attackRange) 적이 공격 범위 밖으로 이동, 새로운 적 탐색");
-                
-                checkCoAttack = false; // 공격 상태 해제
+                checkCoAttack = false;
                 FindEnemy();
-                
                 yield break;
             }
 
+
+            //  현재 적과의 거리를 매 공격 주기마다 확인
+            //float distanceToEnemy = Vector3.Distance(character.attackPoint.position, enemy.transform.position);
+
+            //if (distanceToEnemy > character.attackRange)
+            //{
+            //    Debug.Log("BattleBehaviour CoAttack() if (distanceToEnemy > character.attackRange) 적이 공격 범위 밖으로 이동, 새로운 적 탐색");
+
+            //    checkCoAttack = false; // 공격 상태 해제
+            //    FindEnemy();
+
+            //    yield break;
+            //}
+
             Debug.Log("BattleBehaviour CoAttack() 적 공격!!");
             // 캐릭터가 가진 Attack() 함수 호출하고 enemy 전달
+            LookAtEnemy();
             character.Attack(enemy);
-
+            // 한프레임 기다리기.
+            yield return null;
+            
+            // 현재 진행되고 있는 애니메이션 시간(길이)
+            float animLength = character.animator.GetCurrentAnimatorStateInfo(character.animator.GetLayerIndex("Battle")).length;
+            
+            yield return new WaitForSeconds(animLength);
             yield return new WaitForSeconds(character.attackSpeed);
 
         }
@@ -176,10 +203,10 @@ public class BattleBehaviour : CharacterBehaviour
             Vector3 direction = (enemy.transform.position - transform.position).normalized;
 
             // Y축 회전만 고려하여 회전값 설정
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            //Quaternion lookRotation = Quaternion.LookRotation(direction);
 
             // 즉시 타겟 방향으로 회전
-            transform.rotation = lookRotation;
+            character.transform.forward = direction;
         }
     }
 

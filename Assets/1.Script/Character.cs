@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System;
 using UnityEngine.XR;
+using Random = UnityEngine.Random;
 
 public class Character : MonoBehaviour
 {
@@ -50,10 +51,12 @@ public class Character : MonoBehaviour
         if (gameMode == GameMode.Battle)
         {
             React(BehaviourType.Battle);
+            animator.SetLayerWeight(animator.GetLayerIndex("Battle"),1);
         }
         else
         {
             React(BehaviourType.Idle);
+            animator.SetLayerWeight(animator.GetLayerIndex("Battle"), 0);
         }
     }
 
@@ -133,8 +136,6 @@ public class Character : MonoBehaviour
 
     }
 
-
-
     public void MoveTo(Vector3 des, Action aCallback = null)
     {
         arrivedCallback = aCallback;
@@ -174,16 +175,25 @@ public class Character : MonoBehaviour
         }
         // 칼로 써는 애니메이션 추가
 
+        int randomNumber = Random.Range(0, 3);
+        animator.SetInteger("AttackRandom", randomNumber);
+        animator.SetTrigger("Attack");
+
 
         for (int i = 0; i < cols.Length; i++)
         {
             if (cols[i].gameObject.tag == "Enemy")
             {
                 // 휘두를때마다 Character의 TakeDamage 함수에다가 매개변수로 PlayerHunter의 attackPower를 전달해야함.
+                
+                
+                
                 Debug.Log($"적에게 데미지 들어가야함 {cols[i].name}");
                 cols[i].gameObject.GetComponent<Enemy>().TakeDamage(attackPower);
             }
         }
+
+        
         //Debug.Log("캐릭터가 적을 Attack!!");
 
     }
